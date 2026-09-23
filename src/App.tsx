@@ -318,13 +318,13 @@ export default function App() {
           </a>
           
           {/* Navigation Tabs (Visible on Desktop / Tablets) */}
-          <nav className="hidden lg:flex items-center gap-4 xl:gap-6">
-            <a href="#about" className="text-xs xl:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors">Our Story</a>
-            <a href="#services" className="text-xs xl:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors">Packages</a>
-            <a href="#impact" className="text-xs xl:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors">Before & After</a>
-            <a href="#gallery" className="text-xs xl:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors">Showcase</a>
-            <a href="#reviews" className="text-xs xl:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors">5.0★ Reviews</a>
-            <a href="#calculator" className="text-xs xl:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors">Estimator</a>
+          <nav className="desktop-nav items-center gap-3 sm:gap-4 md:gap-5 xl:gap-7">
+            <a href="#about" className="text-xs sm:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors whitespace-nowrap">Our Story</a>
+            <a href="#services" className="text-xs sm:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors whitespace-nowrap">Packages</a>
+            <a href="#impact" className="text-xs sm:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors whitespace-nowrap">Before & After</a>
+            <a href="#gallery" className="text-xs sm:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors whitespace-nowrap">Showcase</a>
+            <a href="#reviews" className="text-xs sm:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors whitespace-nowrap">5.0★ Reviews</a>
+            <a href="#calculator" className="text-xs sm:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors whitespace-nowrap">Estimator</a>
           </nav>
           
           {/* Right Header Actions: Phone + Light/Dark Toggle + Book Slot + Hamburger */}
@@ -347,7 +347,7 @@ export default function App() {
               </a>
             </div>
 
-            {/* Light / Dark Mode Toggle Button: ALWAYS visible on ALL screen sizes and browsers */}
+            {/* Light / Dark Mode Toggle Button */}
             <button
               onClick={toggleTheme}
               type="button"
@@ -388,10 +388,10 @@ export default function App() {
               Book Your Slot
             </a>
 
-            {/* Mobile / Tablet Menu Button (shown when tabs hide on <lg) */}
+            {/* Mobile / Tablet Menu Button */}
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="lg:hidden text-white p-2 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-pink-400 transition-colors focus:outline-none flex items-center justify-center shrink-0 cursor-pointer"
+              className="mobile-menu-btn text-white p-2 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-pink-400 transition-colors focus:outline-none items-center justify-center shrink-0 cursor-pointer"
               aria-label="Toggle Navigation Menu"
             >
               {mobileMenuOpen ? (
@@ -412,7 +412,7 @@ export default function App() {
 
         {/* Mobile / Tablet Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-zinc-950/95 border-b border-zinc-800 px-6 py-6 space-y-4 animate-in slide-in-from-top-2 backdrop-blur-xl">
+          <div className="bg-zinc-950/95 border-b border-zinc-800 px-6 py-6 space-y-4 animate-in slide-in-from-top-2 backdrop-blur-xl">
             <a 
               href="#about" 
               onClick={() => setMobileMenuOpen(false)} 

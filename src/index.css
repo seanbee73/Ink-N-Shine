@@ -43,6 +43,33 @@ body {
   background: #3f3f46;
 }
 
+/* Header Navigation & Responsive Controls */
+.desktop-nav {
+  display: flex !important;
+  align-items: center;
+}
+
+.mobile-menu-btn {
+  display: none !important;
+}
+
+@media (max-width: 960px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  .mobile-menu-btn {
+    display: inline-flex !important;
+  }
+}
+
+.theme-light .desktop-nav a {
+  color: #334155 !important;
+}
+
+.theme-light .desktop-nav a:hover {
+  color: #db2777 !important;
+}
+
 /* Light Mode Polish */
 .theme-light {
   background-color: #f8fafc !important;
