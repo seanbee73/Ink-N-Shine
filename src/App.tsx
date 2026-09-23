@@ -115,7 +115,7 @@ const REAL_PROJECTS: GalleryItem[] = [
     vehicle: '2015 Toyota RAV4',
     client: 'Andre Carl Batalla',
     city: 'Mississauga / GTA',
-    image: 'https://images.unsplash.com/photo-1552930294-6b595f4c2974?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80',
+    image: '/assets/recent-rav4.jpg',
     tags: ['Tough Salt Dissolved', 'High-Temp Steam', 'Headlight Restore', 'Engine Bay'],
     summary: 'Dissolved years of rock-hard Ontario winter road salt embedded deep into the carpet and footwells, combined with high-temp antimicrobial steam and crystal clear headlight restoration.',
     highlight: 'Full Salt & Odor Elimination'
@@ -127,7 +127,7 @@ const REAL_PROJECTS: GalleryItem[] = [
     vehicle: 'Ford F-150 SuperCrew',
     client: 'Cindy (Hamilton)',
     city: 'Hamilton, ON',
-    image: 'https://images.unsplash.com/photo-1584345604476-8ec5e12e42dd?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80',
+    image: '/assets/recent-f150.jpg',
     tags: ['Heavy Grease Removal', 'Seat Belt Cleaning', 'Multi-Stage Polish', '5-Yr Ceramic'],
     summary: 'Restored heavy industrial grease from the console, seatbelts, and upholstery, then machine-corrected the paint and applied a 5-year ceramic coating for ultra-gloss reflection.',
     highlight: 'Heavy Duty Interior & 5-Year 9H Ceramic'
@@ -139,7 +139,7 @@ const REAL_PROJECTS: GalleryItem[] = [
     vehicle: 'Tesla Model Y / Model 3',
     client: 'M A & Raygee',
     city: 'Toronto, ON',
-    image: 'https://images.unsplash.com/photo-1617814076367-b759c7d7e738?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80',
+    image: '/assets/recent-tesla.jpg',
     tags: ['White Seat Protection', 'Car Wash Mode', 'Vent Sanitization', 'Mint Fragrance'],
     summary: 'Meticulous interior cleaning with delicate vegan leather safe cleaner, touchscreen glass polishing, and complete exterior snow foam wash directly in client driveway.',
     highlight: 'Specialized EV Detail'
@@ -151,7 +151,7 @@ const REAL_PROJECTS: GalleryItem[] = [
     vehicle: '2022 Kia Soul ("Lexi")',
     client: 'Mercy & Abi',
     city: 'Oshawa / Toronto',
-    image: 'https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80',
+    image: '/assets/recent-kiasoul.jpg',
     tags: ['Salt Crust Dissolved', 'Fabric Shampoo', 'Odor Neutralized', 'Mat Covers'],
     summary: 'Full floor carpet deep extraction removing dark stains and winter salt crusted into the footwells, restoring clean fabric and fresh scent.',
     highlight: 'Salt & Stain Zero Trace'
@@ -163,7 +163,7 @@ const REAL_PROJECTS: GalleryItem[] = [
     vehicle: 'Hyundai Tucson / Santa Fe',
     client: 'North York & Markham Clients',
     city: 'North York & Markham',
-    image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80',
+    image: '/assets/recent-hyundai.jpg',
     tags: ['1-Step Paint Polish', 'Roofline Cleaning', 'Clay Bar Treatment', 'Tire Dressing'],
     summary: 'Full exterior decontamination and 1-step gloss enhancement polish paired with interior steam extraction and leather UV conditioning.',
     highlight: 'Signature Exterior & Interior Combo'
@@ -175,7 +175,7 @@ const REAL_PROJECTS: GalleryItem[] = [
     vehicle: '2005 Toyota Camry & Lexus SC',
     client: 'Jason Joseph & James',
     city: 'Scarborough / Toronto',
-    image: 'https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg',
+    image: '/assets/recent-camry-lexus.jpg',
     tags: ['20-Yr Vehicle Revival', 'Headliner Clean', 'Pet Hair Extraction', 'Trim Restored'],
     summary: 'Turned older beloved daily drivers from tired condition to like-new freshness with deep interior extraction, seat scrub, and crystal clear windows.',
     highlight: 'Complete Classic Revival'
@@ -187,6 +187,23 @@ export default function App() {
   const [activeGalleryTab, setActiveGalleryTab] = useState<'all' | 'salt' | 'interior' | 'ceramic' | 'suv'>('all');
   const [selectedGalleryItem, setSelectedGalleryItem] = useState<GalleryItem | null>(null);
   const [activeServiceModal, setActiveServiceModal] = useState<ServiceModalData | null>(null);
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('ink_theme');
+      if (saved) return saved === 'dark';
+    }
+    return true;
+  });
+
+  const toggleTheme = () => {
+    setIsDarkMode(prev => {
+      const next = !prev;
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('ink_theme', next ? 'dark' : 'light');
+      }
+      return next;
+    });
+  };
 
   // Quote Calculator State (Grounded in real Ink N Shine GTA pricing)
   const [calcVehicle, setCalcVehicle] = useState<'sedan' | 'suv' | 'truck'>('suv');
@@ -264,7 +281,7 @@ export default function App() {
   };
 
   return (
-    <div className="bg-zinc-950 text-zinc-300 font-sans antialiased selection:bg-pink-500 selection:text-white flex flex-col min-h-screen">
+    <div className={`${isDarkMode ? 'dark bg-zinc-950 text-zinc-300' : 'theme-light bg-slate-50 text-slate-800'} font-sans antialiased selection:bg-pink-500 selection:text-white flex flex-col min-h-screen transition-colors duration-300`}>
       
       {/* Top Banner: Real Trust Signals */}
       <div className="bg-gradient-to-r from-pink-600 via-rose-600 to-pink-500 text-white text-xs font-semibold py-2 px-4 text-center tracking-wide flex items-center justify-center gap-2">
@@ -325,6 +342,26 @@ export default function App() {
                 Alt: (416) 908-8435
               </a>
             </div>
+
+            {/* Light / Dark Mode Toggle Button: positioned directly to the left of Book Your Slot */}
+            <button
+              onClick={toggleTheme}
+              type="button"
+              aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              className={`inline-flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm ${
+                isDarkMode 
+                  ? 'bg-zinc-900 border-zinc-700 text-yellow-400 hover:text-yellow-300 hover:border-yellow-400/50 hover:bg-zinc-800' 
+                  : 'bg-white border-slate-300 text-amber-600 hover:text-pink-600 hover:border-pink-300 hover:bg-slate-100 shadow-md'
+              }`}
+            >
+              <iconify-icon 
+                icon={isDarkMode ? "solar:sun-2-bold" : "solar:moon-stars-bold"} 
+                width="20" 
+                height="20"
+              ></iconify-icon>
+            </button>
+
             <a 
               href="#contact" 
               className="inline-flex items-center justify-center px-5 py-2.5 text-xs lg:text-sm font-semibold text-white bg-gradient-to-r from-pink-600 to-rose-500 rounded-full hover:from-pink-500 hover:to-rose-400 transition-all duration-200 shadow-md shadow-pink-500/20 hover:scale-105"
@@ -333,13 +370,33 @@ export default function App() {
             </a>
           </div>
 
-          <button 
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden text-white p-2 focus:outline-none"
-            aria-label="Toggle Navigation Menu"
-          >
-            <iconify-icon icon={mobileMenuOpen ? "solar:close-circle-linear" : "solar:hamburger-menu-linear"} width="26" height="26"></iconify-icon>
-          </button>
+          {/* Mobile Right Controls */}
+          <div className="flex items-center gap-2 sm:hidden">
+            <button
+              onClick={toggleTheme}
+              type="button"
+              aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
+              className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${
+                isDarkMode 
+                  ? 'bg-zinc-900 border-zinc-700 text-yellow-400' 
+                  : 'bg-white border-slate-300 text-amber-600'
+              }`}
+            >
+              <iconify-icon 
+                icon={isDarkMode ? "solar:sun-2-bold" : "solar:moon-stars-bold"} 
+                width="18" 
+                height="18"
+              ></iconify-icon>
+            </button>
+
+            <button 
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="text-white p-2 focus:outline-none"
+              aria-label="Toggle Navigation Menu"
+            >
+              <iconify-icon icon={mobileMenuOpen ? "solar:close-circle-linear" : "solar:hamburger-menu-linear"} width="26" height="26"></iconify-icon>
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation Drawer */}
@@ -417,94 +474,131 @@ export default function App() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative pt-36 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex items-center min-h-[92vh]">
-        {/* Background Image: Vivid and Visible with Focused Vignette & Gradient Overlays */}
-        <div className="absolute inset-0 z-0">
-          <img 
-            src="/assets/hero-bg.jpg" 
-            onError={(e) => {
-              (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczNQFdc3yQwz6VxjXJWBdHXweQw2o6yl1VDTX_KbFv3CK6ORmUGWMnxdf9XlYQ0TZUAmPVtB3sVOAfSq85oQ5kUIOvTHFxFVbYR68oxTgV4kHKqukqY=w2000';
-            }}
-            alt="Ink N Shine Detailing Mobile Restoration" 
-            className="w-full h-full object-cover object-right md:object-center opacity-70 filter brightness-95 contrast-105"
-          />
-          {/* Top to bottom gradient to seamlessly blend header & bottom section */}
-          <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-zinc-950/80"></div>
-          {/* Left-to-right gradient ensuring pristine text contrast on the left while keeping the car action visible on the right */}
-          <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/90 sm:via-zinc-950/80 md:via-zinc-950/65 to-transparent"></div>
-          {/* Subtle pink atmospheric glow */}
-          <div className="absolute top-1/4 left-10 w-96 h-96 bg-pink-600/15 rounded-full blur-3xl pointer-events-none"></div>
+      <section className="relative pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden flex items-center min-h-[85vh]">
+        {/* Subtle Atmospheric Ambient Lighting */}
+        <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-pink-600/10 rounded-full blur-3xl"></div>
+          <div className="absolute bottom-10 right-1/4 w-96 h-96 bg-rose-500/10 rounded-full blur-3xl"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(#27272a_1px,transparent_1px)] [background-size:24px_24px] opacity-20"></div>
         </div>
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-          <div className="max-w-3xl">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
             
-            {/* Trust Pills / Badges */}
-            <div className="flex flex-wrap items-center gap-2 mb-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-pink-500/40 bg-zinc-950/80 backdrop-blur-md shadow-lg shadow-pink-500/10">
-                <div className="flex text-pink-400">
-                  <iconify-icon icon="solar:star-bold" width="14" height="14"></iconify-icon>
-                  <iconify-icon icon="solar:star-bold" width="14" height="14"></iconify-icon>
-                  <iconify-icon icon="solar:star-bold" width="14" height="14"></iconify-icon>
-                  <iconify-icon icon="solar:star-bold" width="14" height="14"></iconify-icon>
-                  <iconify-icon icon="solar:star-bold" width="14" height="14"></iconify-icon>
+            {/* Left Column: Typography & CTAs */}
+            <div className="lg:col-span-7 flex flex-col justify-center">
+              
+              {/* Trust Badges */}
+              <div className="flex flex-wrap items-center gap-2 mb-6">
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-pink-500/40 bg-zinc-950/80 backdrop-blur-md shadow-lg shadow-pink-500/10">
+                  <div className="flex text-pink-400">
+                    <iconify-icon icon="solar:star-bold" width="14" height="14"></iconify-icon>
+                    <iconify-icon icon="solar:star-bold" width="14" height="14"></iconify-icon>
+                    <iconify-icon icon="solar:star-bold" width="14" height="14"></iconify-icon>
+                    <iconify-icon icon="solar:star-bold" width="14" height="14"></iconify-icon>
+                    <iconify-icon icon="solar:star-bold" width="14" height="14"></iconify-icon>
+                  </div>
+                  <span className="text-xs font-semibold text-pink-200 tracking-tight">5.0 Rating • 19 Google Reviews</span>
                 </div>
-                <span className="text-xs font-semibold text-pink-200 tracking-tight">5.0 Rating • 19 Google Reviews</span>
-              </div>
 
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-zinc-700/80 bg-zinc-950/80 backdrop-blur-md text-xs font-medium text-zinc-200 shadow-md">
-                <iconify-icon icon="solar:shield-check-bold" class="text-pink-400" width="14"></iconify-icon>
-                100% Women-Owned & Operated
+                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-zinc-700/80 bg-zinc-950/80 backdrop-blur-md text-xs font-medium text-zinc-200 shadow-md">
+                  <iconify-icon icon="solar:shield-check-bold" class="text-pink-400" width="14"></iconify-icon>
+                  100% Women-Owned & Operated
+                </div>
               </div>
-            </div>
-            
-            <h1 className="text-4xl sm:text-5xl lg:text-7xl font-extrabold text-white tracking-tight leading-[1.08] mb-6 drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
-              Toronto's Premier <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-rose-300 to-pink-500 drop-shadow-[0_2px_10px_rgba(236,72,153,0.3)]">Women-Owned</span> Mobile Detailing
-            </h1>
-            
-            <p className="text-lg lg:text-xl text-zinc-200 mb-8 max-w-2xl font-normal leading-relaxed drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]">
-              We bring the shine directly to your driveway. Founded by <strong className="text-white font-semibold">Nes & Nadine</strong>, we specialize in high-pressure steam sanitization, stubborn Canadian winter salt extraction, deep interior restoration, engine bays, and 5-year ceramic coatings across the entire Greater Toronto Area.
-            </p>
-
-            {/* Quality Statement from Owner with refined glass backdrop */}
-            <div className="p-4 sm:p-5 rounded-2xl bg-zinc-950/85 backdrop-blur-md border border-zinc-800/90 mb-10 max-w-2xl flex items-start gap-3.5 shadow-xl">
-              <div className="w-9 h-9 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center shrink-0 mt-0.5">
-                <iconify-icon icon="solar:heart-bold" width="20"></iconify-icon>
-              </div>
-              <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
-                <strong className="text-white font-semibold">"Quality over quantity always."</strong> We only take <strong className="text-pink-300 font-semibold">2 vehicles per day</strong> so we never rush your car and never cut corners. Every crevice gets meticulous care!
+              
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.08] mb-6">
+                Toronto's Premier <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-rose-300 to-pink-500">Women-Owned</span> Mobile Detailing
+              </h1>
+              
+              <p className="text-base sm:text-lg text-zinc-300 mb-8 max-w-2xl font-normal leading-relaxed">
+                We bring the shine directly to your driveway. Founded by <strong className="text-white font-semibold">Nes & Nadine</strong>, we specialize in high-pressure steam sanitization, stubborn Canadian winter salt extraction, deep interior restoration, engine bays, and 5-year ceramic coatings across the entire Greater Toronto Area.
               </p>
+
+              {/* Quality Statement from Owner */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-zinc-900/80 backdrop-blur-md border border-zinc-800 mb-8 max-w-2xl flex items-start gap-3.5 shadow-xl">
+                <div className="w-9 h-9 rounded-lg bg-pink-500/20 text-pink-400 flex items-center justify-center shrink-0 mt-0.5">
+                  <iconify-icon icon="solar:heart-bold" width="20"></iconify-icon>
+                </div>
+                <p className="text-xs sm:text-sm text-zinc-300 leading-relaxed">
+                  <strong className="text-white font-semibold">"Quality over quantity always."</strong> We only take <strong className="text-pink-300 font-semibold">2 vehicles per day</strong> so we never rush your car and never cut corners. Every crevice gets meticulous care!
+                </p>
+              </div>
+              
+              <div className="flex flex-col sm:flex-row gap-4">
+                <a 
+                  href="#contact" 
+                  className="inline-flex items-center justify-center px-8 py-4 text-sm lg:text-base font-semibold text-white bg-gradient-to-r from-pink-600 to-rose-500 rounded-full hover:from-pink-500 hover:to-rose-400 transition-all duration-200 hover:scale-105 shadow-lg shadow-pink-500/25"
+                >
+                  Book Your Mobile Detail
+                  <iconify-icon icon="solar:arrow-right-linear" width="20" height="20" class="ml-2"></iconify-icon>
+                </a>
+                <a 
+                  href="https://wa.me/14169198421?text=Hi%20Nes%20and%20Nadine!%20I'd%20like%20to%20get%20a%20quote%20for%20detailing%20my%20car." 
+                  target="_blank" 
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center px-8 py-4 text-sm lg:text-base font-medium text-white bg-zinc-900 border border-zinc-700 rounded-full hover:border-pink-400 hover:text-pink-300 transition-all duration-200"
+                >
+                  <iconify-icon icon="solar:chat-round-dots-linear" width="20" height="20" class="mr-2 text-green-400"></iconify-icon>
+                  WhatsApp Quick Chat
+                </a>
+              </div>
+              
+              <div className="mt-8 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs text-zinc-400 font-medium">
+                <span className="flex items-center gap-1.5 text-pink-300 font-semibold">
+                  <span className="w-2 h-2 rounded-full bg-pink-400 animate-pulse"></span>
+                  Now Booking for This & Next Month
+                </span>
+                <span className="flex items-center gap-1.5">
+                  <iconify-icon icon="solar:map-point-bold" class="text-pink-400" width="14"></iconify-icon>
+                  Toronto, Mississauga, Scarborough, Brampton & All GTA
+                </span>
+              </div>
             </div>
-            
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a 
-                href="#contact" 
-                className="inline-flex items-center justify-center px-8 py-4 text-sm lg:text-base font-semibold text-white bg-gradient-to-r from-pink-600 to-rose-500 rounded-full hover:from-pink-500 hover:to-rose-400 transition-all duration-200 hover:scale-105 shadow-lg shadow-pink-500/25"
-              >
-                Book Your Mobile Detail
-                <iconify-icon icon="solar:arrow-right-linear" width="20" height="20" class="ml-2"></iconify-icon>
-              </a>
-              <a 
-                href="https://wa.me/14169198421?text=Hi%20Nes%20and%20Nadine!%20I'd%20like%20to%20get%20a%20quote%20for%20detailing%20my%20car." 
-                target="_blank" 
-                rel="noreferrer"
-                className="inline-flex items-center justify-center px-8 py-4 text-sm lg:text-base font-medium text-white bg-zinc-900 border border-zinc-700 rounded-full hover:border-pink-400 hover:text-pink-300 transition-all duration-200"
-              >
-                <iconify-icon icon="solar:chat-round-dots-linear" width="20" height="20" class="mr-2 text-green-400"></iconify-icon>
-                WhatsApp Quick Chat
-              </a>
+
+            {/* Right Column: Hero Shot in a Balanced Frame */}
+            <div className="lg:col-span-5 relative">
+              {/* Outer Decorative Ambient Glow */}
+              <div className="absolute -inset-1.5 bg-gradient-to-r from-pink-500/30 to-rose-500/30 rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition duration-500"></div>
+              
+              <div className="relative rounded-3xl bg-zinc-900/90 border border-zinc-800/90 p-2 sm:p-3 shadow-2xl overflow-hidden backdrop-blur-xl">
+                <div className="aspect-[4/3] sm:aspect-[14/11] rounded-2xl overflow-hidden relative bg-zinc-950">
+                  <img 
+                    src="/assets/hero-bg.jpg" 
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczNQFdc3yQwz6VxjXJWBdHXweQw2o6yl1VDTX_KbFv3CK6ORmUGWMnxdf9XlYQ0TZUAmPVtB3sVOAfSq85oQ5kUIOvTHFxFVbYR68oxTgV4kHKqukqY=w2000';
+                    }}
+                    alt="Ink N Shine Detailing Mobile Restoration" 
+                    className="w-full h-full object-cover object-center filter brightness-105 contrast-105 hover:scale-105 transition-transform duration-700"
+                  />
+                  
+                  {/* Subtle Image Bottom Vignette */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent pointer-events-none"></div>
+
+                  {/* Top Floating Badge */}
+                  <div className="absolute top-3 left-3 bg-zinc-950/85 backdrop-blur-md border border-pink-500/30 px-3 py-1.5 rounded-full flex items-center gap-2 shadow-lg">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span className="text-[11px] font-semibold text-zinc-200">Mobile Unit On-Duty</span>
+                  </div>
+
+                  {/* Bottom Highlight Label */}
+                  <div className="absolute bottom-3 inset-x-3 bg-zinc-950/90 backdrop-blur-md border border-zinc-800/80 p-2.5 rounded-xl flex items-center justify-between">
+                    <div>
+                      <div className="text-xs font-bold text-white flex items-center gap-1.5">
+                        <span>Driveway Service</span>
+                        <span className="text-pink-400">•</span>
+                        <span className="text-pink-300 font-normal">Direct To You</span>
+                      </div>
+                      <div className="text-[10px] text-zinc-400 mt-0.5">Water & power fully equipped mobile setup</div>
+                    </div>
+                    <div className="w-8 h-8 rounded-full bg-pink-500/10 border border-pink-500/30 flex items-center justify-center text-pink-400 shrink-0">
+                      <iconify-icon icon="solar:sparkler-bold" width="16"></iconify-icon>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            
-            <div className="mt-8 flex flex-wrap items-center gap-y-2 gap-x-6 text-xs text-zinc-400 font-medium">
-              <span className="flex items-center gap-1.5 text-pink-300 font-semibold">
-                <span className="w-2 h-2 rounded-full bg-pink-400 animate-pulse"></span>
-                Now Booking for This & Next Month
-              </span>
-              <span className="flex items-center gap-1.5">
-                <iconify-icon icon="solar:map-point-bold" class="text-pink-400" width="14"></iconify-icon>
-                Serving Toronto, Mississauga, Scarborough, Brampton, Hamilton & All GTA
-              </span>
-            </div>
+
           </div>
         </div>
       </section>
@@ -688,9 +782,12 @@ export default function App() {
               <div>
                 <div className="aspect-[16/10] overflow-hidden relative">
                   <img 
-                    src="https://images.unsplash.com/photo-1552930294-6b595f4c2974?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                    src="/assets/signature-shine.jpg" 
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczPRmmU5XhhckWLfKqs37fUQfMO2kwFmITJtMRhR9wYl-nGr3edazBHoZToN7XQ3ZYHN54V682cQKbAZ7tXq68H_-lCpI_zqI-OL6-d-lvjnpZr-pR0=w1600';
+                    }}
                     alt="Signature Shine Package" 
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-transparent to-transparent"></div>
                 </div>
@@ -743,7 +840,7 @@ export default function App() {
                 <button 
                   onClick={() => setActiveServiceModal({
                     title: 'Signature Shine Package',
-                    image: 'https://images.unsplash.com/photo-1552930294-6b595f4c2974?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    image: '/assets/signature-shine.jpg',
                     description: 'Our most requested home service treatment. We restore the interior freshness while giving the exterior a rich, glossy hand polish.',
                     duration: '3.5 - 5.0 Hours',
                     price: '$475 - $575 (Depends on vehicle size & condition)',
@@ -770,7 +867,10 @@ export default function App() {
               <div>
                 <div className="aspect-[16/10] overflow-hidden relative">
                   <img 
-                    src="https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                    src="/assets/interior-deep.jpg" 
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczNq7tOTM9TbfLKvBNYNeFXdnlDzCoMRiRQxnGV9mwWGlcUwQnZs_8WIsU6pbCImpwjc6xXxAJGMrLUkdng3yxFbVLMcw8W_V_7PanIrLQjwBXTGAgI=w1600';
+                    }}
                     alt="Interior Deep Detail" 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
@@ -821,7 +921,7 @@ export default function App() {
                 <button 
                   onClick={() => setActiveServiceModal({
                     title: 'Interior Deep Restoration',
-                    image: 'https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80',
+                    image: '/assets/interior-deep.jpg',
                     description: 'A complete indoor reset. We purge years of trapped dirt, salt, and spills to make your cabin smell and feel fresh as a showroom.',
                     duration: '3.0 - 4.0 Hours',
                     price: '$350 - $450',
@@ -846,7 +946,10 @@ export default function App() {
               <div>
                 <div className="aspect-[16/10] overflow-hidden relative">
                   <img 
-                    src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg" 
+                    src="/assets/paint-ceramic.jpg" 
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczPEED7fuC4llsgnFgsDmN-teN8X6SnSDkCwNC9Ead3SJ63dETjp-jNJ6vlbYHyj1ojvKVkW-N-qfe3Zx2aX5gyk6mIPmNCmSLPv1FEZg1Cmkkopw_Q=w1600';
+                    }}
                     alt="Paint Correction & Ceramic Coating" 
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />
@@ -897,7 +1000,7 @@ export default function App() {
                 <button 
                   onClick={() => setActiveServiceModal({
                     title: 'Paint Correction & Ceramic Protection',
-                    image: 'https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg',
+                    image: '/assets/paint-ceramic.jpg',
                     description: 'Our top-tier exterior enhancement. We measure your clear coat thickness and use precision dual-action polishers to remove swirl marks before locking in a 5-year ceramic shell.',
                     duration: 'Full Day Service',
                     price: '$720 - $820 for 1-Step Polish Combo / $3,400 - $4,000 for Full 5-Year Ceramic Restoration (e.g. Ford F-150 / Trucks)',
@@ -970,7 +1073,10 @@ export default function App() {
                 <div className="absolute inset-0 flex">
                   <div className="w-1/2 relative overflow-hidden bg-zinc-800">
                     <img 
-                      src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/4734259a-bad7-422f-981e-ce01e79184f2_1600w.jpg" 
+                      src="/assets/before-after.jpg" 
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczOqp61vtmhcWDPFhhVBI1yVH4gFXlwwe0qKfMUVwyhPXRLr46xuc0EANYnlvAtlasgsYbCRknnz5RFtEG0Df5MIw1-h-No1Loq68-FJaAwYJ9fL_bc=w1600';
+                      }}
                       alt="Before detailing salt crust" 
                       className="absolute w-[200%] max-w-none h-full object-cover filter brightness-75 contrast-75 sepia-[.2]"
                     />
@@ -980,7 +1086,10 @@ export default function App() {
                   </div>
                   <div className="w-1/2 relative overflow-hidden border-l-2 border-pink-500">
                     <img 
-                      src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/4734259a-bad7-422f-981e-ce01e79184f2_1600w.jpg" 
+                      src="/assets/before-after.jpg" 
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczOqp61vtmhcWDPFhhVBI1yVH4gFXlwwe0qKfMUVwyhPXRLr46xuc0EANYnlvAtlasgsYbCRknnz5RFtEG0Df5MIw1-h-No1Loq68-FJaAwYJ9fL_bc=w1600';
+                      }}
                       alt="After Ink N Shine detailing" 
                       className="absolute right-0 w-[200%] max-w-none h-full object-cover"
                     />
@@ -1089,16 +1198,50 @@ export default function App() {
                 className="group bg-zinc-900/60 rounded-3xl border border-zinc-800 overflow-hidden hover:border-pink-500/50 transition-all duration-300 cursor-pointer flex flex-col justify-between"
               >
                 <div>
-                  <div className="aspect-[16/10] overflow-hidden relative">
-                    <img 
-                      src={item.image} 
-                      alt={item.title} 
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    />
-                    <div className="absolute top-3 left-3 bg-zinc-950/80 backdrop-blur-md text-pink-300 border border-pink-500/30 text-[11px] font-bold px-2.5 py-1 rounded-full">
+                  <div className="aspect-[16/10] overflow-hidden relative bg-zinc-950 flex items-center justify-center">
+                    {item.id === 'tesla' || item.id === 'kia-soul' || item.id === 'lexus-camry' || item.id === 'hyundai-tucson' ? (
+                      <>
+                        <img 
+                          src={item.image} 
+                          alt="" 
+                          aria-hidden="true" 
+                          className="absolute inset-0 w-full h-full object-cover blur-xl opacity-40 scale-110"
+                        />
+                        <img 
+                          src={item.image} 
+                          onError={(e) => {
+                            if (item.id === 'tesla') {
+                              (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczPrHSNLHOpg6J1fwMihkCCDH4HchXhLFXLOuj95fqy8CKsOD5ixxuoHeXCwR11q5odMB_CQjQ_QXagsOn3kAC-z9ttjc9orCxo3CDUOBea_HnRfGFI=w1600';
+                            } else if (item.id === 'kia-soul') {
+                              (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczNtCPuqRFCNktUnGDwN8ETcdmpIjDHpdRikyNoAEEShUwYd_buoDcrj9W6j7mF-9abEyJQFqNmxt2p77nM89EM3Wp-tnjHjioB_TgmBi3yO3jc7yaM=w1600';
+                            } else if (item.id === 'lexus-camry') {
+                              (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczPCzyH-8Zu6FFiYCdODrnh8onOgGWPnXBpFgkyQuqi-F3f6zclTdvdAzyzfrm98p6UDzfrPsJmN6ujO-Xuc06Yzj57GW4xCnUjmm8h2na5JaYf-egw=w1600';
+                            } else if (item.id === 'hyundai-tucson') {
+                              (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczOs1F79JyWtWO30iWZ0YJ0k3Ool8pJAUA3M46zRMQc8M0fYQFw29BYDhng_Ky9uJ5fPOVrvX2D5f3ItFZ6lQ_02tpMPMT2CUmVT128q-jPM9oepuAc=w1600';
+                            }
+                          }}
+                          alt={item.title} 
+                          className="relative z-10 w-full h-full object-contain p-1 group-hover:scale-105 transition-transform duration-500"
+                        />
+                      </>
+                    ) : (
+                      <img 
+                        src={item.image} 
+                        onError={(e) => {
+                          if (item.id === 'rav4') {
+                            (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczNOWH_0yVf1-9IfQF9HqEik3oE9W6gNT56XZYiHfSn2r5qqc9_wIMDJzx6rvO7eHU5bLOZAvPuD42kToFXsjkNJaIB2JaCsLPcono3oaIKHUf8BgWk=w1600';
+                          } else if (item.id === 'f150') {
+                            (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczOrZB3-OqBzMjI0VBgO4mGHW0cVumJ31vAd4PSX8Su0WpgzQH385YhM9POpJgOI_8b_gLd5SlJvmLG4emdAfQXwkcw4Xh7qPzMWV7A75ACD1OFiz5I=w1600';
+                          }
+                        }}
+                        alt={item.title} 
+                        className={`w-full h-full object-cover ${item.id === 'rav4' ? 'object-[center_22%]' : item.id === 'f150' ? 'object-[center_35%]' : 'object-center'} group-hover:scale-105 transition-transform duration-500`}
+                      />
+                    )}
+                    <div className="absolute top-3 left-3 z-20 bg-zinc-950/80 backdrop-blur-md text-pink-300 border border-pink-500/30 text-[11px] font-bold px-2.5 py-1 rounded-full">
                       {item.city}
                     </div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5">
+                    <div className="absolute inset-0 z-20 bg-gradient-to-t from-zinc-950/90 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-5">
                       <span className="text-xs font-semibold text-pink-300 flex items-center gap-1.5">
                         Inspect transformation details <iconify-icon icon="solar:magnifer-linear" width="16"></iconify-icon>
                       </span>
@@ -1121,7 +1264,10 @@ export default function App() {
                 
                 <div className="px-6 pb-6 pt-0 flex flex-wrap gap-1.5">
                   {item.tags.map((tag, i) => (
-                    <span key={i} className="text-[10px] bg-zinc-800 text-zinc-300 px-2.5 py-1 rounded-md border border-zinc-700/50">
+                    <span 
+                      key={i} 
+                      className="text-[11px] font-semibold bg-zinc-800 text-zinc-200 px-2.5 py-1 rounded-lg border border-zinc-700/60 shadow-sm"
+                    >
                       {tag}
                     </span>
                   ))}
@@ -1776,11 +1922,49 @@ export default function App() {
       {selectedGalleryItem && (
         <div className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4">
           <div className="bg-zinc-900 border border-zinc-800 rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl animate-in fade-in zoom-in-95 duration-200">
-            <div className="aspect-[16/10] relative overflow-hidden bg-black">
-              <img src={selectedGalleryItem.image} alt={selectedGalleryItem.title} className="w-full h-full object-cover" />
+            <div className="relative overflow-hidden bg-black flex items-center justify-center p-2 min-h-[340px] max-h-[70vh]">
+              {selectedGalleryItem.id === 'tesla' || selectedGalleryItem.id === 'kia-soul' || selectedGalleryItem.id === 'lexus-camry' || selectedGalleryItem.id === 'hyundai-tucson' ? (
+                <div className="relative w-full h-[60vh] max-h-[500px] flex items-center justify-center">
+                  <img 
+                    src={selectedGalleryItem.image} 
+                    alt="" 
+                    aria-hidden="true" 
+                    className="absolute inset-0 w-full h-full object-cover blur-2xl opacity-35 scale-110"
+                  />
+                  <img 
+                    src={selectedGalleryItem.image} 
+                    onError={(e) => {
+                      if (selectedGalleryItem.id === 'tesla') {
+                        (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczPrHSNLHOpg6J1fwMihkCCDH4HchXhLFXLOuj95fqy8CKsOD5ixxuoHeXCwR11q5odMB_CQjQ_QXagsOn3kAC-z9ttjc9orCxo3CDUOBea_HnRfGFI=w1600';
+                      } else if (selectedGalleryItem.id === 'kia-soul') {
+                        (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczNtCPuqRFCNktUnGDwN8ETcdmpIjDHpdRikyNoAEEShUwYd_buoDcrj9W6j7mF-9abEyJQFqNmxt2p77nM89EM3Wp-tnjHjioB_TgmBi3yO3jc7yaM=w1600';
+                      } else if (selectedGalleryItem.id === 'lexus-camry') {
+                        (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczPCzyH-8Zu6FFiYCdODrnh8onOgGWPnXBpFgkyQuqi-F3f6zclTdvdAzyzfrm98p6UDzfrPsJmN6ujO-Xuc06Yzj57GW4xCnUjmm8h2na5JaYf-egw=w1600';
+                      } else if (selectedGalleryItem.id === 'hyundai-tucson') {
+                        (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczOs1F79JyWtWO30iWZ0YJ0k3Ool8pJAUA3M46zRMQc8M0fYQFw29BYDhng_Ky9uJ5fPOVrvX2D5f3ItFZ6lQ_02tpMPMT2CUmVT128q-jPM9oepuAc=w1600';
+                      }
+                    }}
+                    alt={selectedGalleryItem.title} 
+                    className="relative z-10 max-h-full w-auto max-w-full object-contain mx-auto rounded-xl shadow-2xl" 
+                  />
+                </div>
+              ) : (
+                <img 
+                  src={selectedGalleryItem.image} 
+                  onError={(e) => {
+                    if (selectedGalleryItem.id === 'rav4') {
+                      (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczNOWH_0yVf1-9IfQF9HqEik3oE9W6gNT56XZYiHfSn2r5qqc9_wIMDJzx6rvO7eHU5bLOZAvPuD42kToFXsjkNJaIB2JaCsLPcono3oaIKHUf8BgWk=w1600';
+                    } else if (selectedGalleryItem.id === 'f150') {
+                      (e.target as HTMLImageElement).src = 'https://lh3.googleusercontent.com/pw/AP1GczOrZB3-OqBzMjI0VBgO4mGHW0cVumJ31vAd4PSX8Su0WpgzQH385YhM9POpJgOI_8b_gLd5SlJvmLG4emdAfQXwkcw4Xh7qPzMWV7A75ACD1OFiz5I=w1600';
+                    }
+                  }}
+                  alt={selectedGalleryItem.title} 
+                  className={`w-full aspect-[16/10] object-cover ${selectedGalleryItem.id === 'rav4' ? 'object-[center_22%]' : selectedGalleryItem.id === 'f150' ? 'object-[center_35%]' : 'object-center'}`} 
+                />
+              )}
               <button 
                 onClick={() => setSelectedGalleryItem(null)}
-                className="absolute top-4 right-4 bg-zinc-950/80 text-white rounded-full p-2 hover:bg-zinc-950 transition-colors"
+                className="absolute top-4 right-4 z-30 bg-zinc-950/80 text-white rounded-full p-2 hover:bg-zinc-950 transition-colors"
                 aria-label="Close details"
               >
                 <iconify-icon icon="solar:close-circle-linear" width="22"></iconify-icon>
@@ -1796,7 +1980,7 @@ export default function App() {
               
               <div className="flex flex-wrap gap-2 mb-6">
                 {selectedGalleryItem.tags.map((tag, idx) => (
-                  <span key={idx} className="text-xs bg-zinc-800 text-pink-300 px-3 py-1 rounded-full border border-zinc-700">
+                  <span key={idx} className="text-xs font-semibold bg-zinc-800 text-pink-400 px-3 py-1 rounded-full border border-zinc-700/80 shadow-sm">
                     {tag}
                   </span>
                 ))}
