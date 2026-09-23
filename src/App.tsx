@@ -284,19 +284,19 @@ export default function App() {
     <div className={`${isDarkMode ? 'dark bg-zinc-950 text-zinc-300' : 'theme-light bg-slate-50 text-slate-800'} font-sans antialiased selection:bg-pink-500 selection:text-white flex flex-col min-h-screen transition-colors duration-300`}>
       
       {/* Top Banner: Real Trust Signals */}
-      <div className="bg-gradient-to-r from-pink-600 via-rose-600 to-pink-500 text-white text-xs font-semibold py-2 px-4 text-center tracking-wide flex items-center justify-center gap-2">
+      <div className="bg-gradient-to-r from-pink-600 via-rose-600 to-pink-500 text-white text-xs font-semibold py-2 px-4 text-center tracking-wide flex items-center justify-center gap-2 relative z-50">
         <span className="inline-block w-2 h-2 rounded-full bg-white animate-pulse"></span>
         <span>TORONTO & GTA'S FIRST FILIPINA WOMEN-OWNED MOBILE AUTO DETAILER • SERVING GTA SINCE 2017</span>
         <span className="hidden md:inline">• WE COME DIRECTLY TO YOUR DRIVEWAY!</span>
       </div>
 
       {/* Sticky Header */}
-      <header className="fixed top-8 w-full z-50 backdrop-blur-md bg-zinc-950/85 border-b border-zinc-800/80 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <header className="sticky top-0 w-full z-40 backdrop-blur-lg bg-zinc-950/90 border-b border-zinc-800 transition-all duration-300">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-2 sm:gap-4">
           
           {/* Logo & Identity */}
-          <a href="#" className="flex items-center gap-3 group">
-            <div className="w-12 h-12 rounded-xl bg-zinc-900 border border-pink-500/40 p-1 overflow-hidden flex items-center justify-center shadow-lg shadow-pink-500/20 group-hover:scale-105 group-hover:border-pink-400 transition-all">
+          <a href="#" className="flex items-center gap-2.5 sm:gap-3 group shrink-0">
+            <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-zinc-900 border border-pink-500/40 p-1 overflow-hidden flex items-center justify-center shadow-lg shadow-pink-500/20 group-hover:scale-105 group-hover:border-pink-400 transition-all">
               <img 
                 src="/assets/ink-n-shine-logo.png" 
                 onError={(e) => {
@@ -307,27 +307,31 @@ export default function App() {
               />
             </div>
             <div>
-              <div className="text-white text-lg font-bold tracking-tight uppercase flex items-center gap-1.5 leading-none">
+              <div className="text-white text-base sm:text-lg font-bold tracking-tight uppercase flex items-center gap-1.5 leading-none">
                 <span>Ink N Shine</span>
-                <span className="text-pink-400 font-normal text-xs tracking-normal uppercase bg-pink-500/10 border border-pink-500/30 px-1.5 py-0.5 rounded">Detailing</span>
+                <span className="text-pink-400 font-normal text-[10px] sm:text-xs tracking-normal uppercase bg-pink-500/10 border border-pink-500/30 px-1.5 py-0.5 rounded">Detailing</span>
               </div>
-              <p className="text-[11px] text-zinc-400 mt-1 font-medium hidden sm:block">
+              <p className="text-[11px] text-zinc-400 mt-1 font-medium hidden md:block">
                 Nes & Nadine • Mobile Detail Restoration
               </p>
             </div>
           </a>
           
-          <nav className="hidden lg:flex items-center gap-7">
-            <a href="#about" className="text-sm font-medium hover:text-pink-400 transition-colors">Our Story</a>
-            <a href="#services" className="text-sm font-medium hover:text-pink-400 transition-colors">Packages & Services</a>
-            <a href="#impact" className="text-sm font-medium hover:text-pink-400 transition-colors">Before & After</a>
-            <a href="#gallery" className="text-sm font-medium hover:text-pink-400 transition-colors">GTA Transformations</a>
-            <a href="#reviews" className="text-sm font-medium hover:text-pink-400 transition-colors">5.0★ Reviews</a>
-            <a href="#calculator" className="text-sm font-medium hover:text-pink-400 transition-colors">Pricing Estimator</a>
+          {/* Navigation Tabs (Visible on Desktop / Tablets) */}
+          <nav className="hidden lg:flex items-center gap-4 xl:gap-6">
+            <a href="#about" className="text-xs xl:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors">Our Story</a>
+            <a href="#services" className="text-xs xl:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors">Packages</a>
+            <a href="#impact" className="text-xs xl:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors">Before & After</a>
+            <a href="#gallery" className="text-xs xl:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors">Showcase</a>
+            <a href="#reviews" className="text-xs xl:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors">5.0★ Reviews</a>
+            <a href="#calculator" className="text-xs xl:text-sm font-semibold text-zinc-300 hover:text-pink-400 transition-colors">Estimator</a>
           </nav>
           
-          <div className="hidden sm:flex items-center gap-3">
-            <div className="flex flex-col items-end mr-1 text-right">
+          {/* Right Header Actions: Phone + Light/Dark Toggle + Book Slot + Hamburger */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            
+            {/* Phone numbers (Desktop) */}
+            <div className="hidden 2xl:flex flex-col items-end text-right mr-1">
               <a 
                 href="tel:4169198421" 
                 className="text-xs text-white hover:text-pink-400 flex items-center gap-1 font-semibold transition-colors"
@@ -343,65 +347,72 @@ export default function App() {
               </a>
             </div>
 
-            {/* Light / Dark Mode Toggle Button: positioned directly to the left of Book Your Slot */}
+            {/* Light / Dark Mode Toggle Button: ALWAYS visible on ALL screen sizes and browsers */}
             <button
               onClick={toggleTheme}
               type="button"
               aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
               title={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-              className={`inline-flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm ${
+              className={`inline-flex items-center justify-center w-10 h-10 rounded-full border transition-all duration-200 hover:scale-105 active:scale-95 shadow-sm cursor-pointer shrink-0 ${
                 isDarkMode 
-                  ? 'bg-zinc-900 border-zinc-700 text-yellow-400 hover:text-yellow-300 hover:border-yellow-400/50 hover:bg-zinc-800' 
+                  ? 'bg-zinc-900 border-zinc-700 text-yellow-400 hover:text-yellow-300 hover:border-yellow-400/60 hover:bg-zinc-800' 
                   : 'bg-white border-slate-300 text-amber-600 hover:text-pink-600 hover:border-pink-300 hover:bg-slate-100 shadow-md'
               }`}
             >
-              <iconify-icon 
-                icon={isDarkMode ? "solar:sun-2-bold" : "solar:moon-stars-bold"} 
-                width="20" 
-                height="20"
-              ></iconify-icon>
+              {isDarkMode ? (
+                /* Crisp Sun SVG */
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="text-yellow-400">
+                  <circle cx="12" cy="12" r="4"/>
+                  <path d="M12 2v2"/>
+                  <path d="M12 20v2"/>
+                  <path d="m4.93 4.93 1.41 1.41"/>
+                  <path d="m17.66 17.66 1.41 1.41"/>
+                  <path d="M2 12h2"/>
+                  <path d="M20 12h2"/>
+                  <path d="m6.34 17.66-1.41 1.41"/>
+                  <path d="m19.07 4.93-1.41 1.41"/>
+                </svg>
+              ) : (
+                /* Crisp Moon SVG */
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" className="text-pink-600">
+                  <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>
+                </svg>
+              )}
             </button>
 
+            {/* Book Your Slot CTA button */}
             <a 
               href="#contact" 
-              className="inline-flex items-center justify-center px-5 py-2.5 text-xs lg:text-sm font-semibold text-white bg-gradient-to-r from-pink-600 to-rose-500 rounded-full hover:from-pink-500 hover:to-rose-400 transition-all duration-200 shadow-md shadow-pink-500/20 hover:scale-105"
+              className="inline-flex items-center justify-center px-3.5 sm:px-5 py-2 sm:py-2.5 text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-pink-600 to-rose-500 rounded-full hover:from-pink-500 hover:to-rose-400 transition-all duration-200 shadow-md shadow-pink-500/20 hover:scale-105 shrink-0 whitespace-nowrap"
             >
               Book Your Slot
             </a>
-          </div>
 
-          {/* Mobile Right Controls */}
-          <div className="flex items-center gap-2 sm:hidden">
-            <button
-              onClick={toggleTheme}
-              type="button"
-              aria-label={isDarkMode ? "Switch to Light Mode" : "Switch to Dark Mode"}
-              className={`w-9 h-9 rounded-full border flex items-center justify-center transition-all ${
-                isDarkMode 
-                  ? 'bg-zinc-900 border-zinc-700 text-yellow-400' 
-                  : 'bg-white border-slate-300 text-amber-600'
-              }`}
-            >
-              <iconify-icon 
-                icon={isDarkMode ? "solar:sun-2-bold" : "solar:moon-stars-bold"} 
-                width="18" 
-                height="18"
-              ></iconify-icon>
-            </button>
-
+            {/* Mobile / Tablet Menu Button (shown when tabs hide on <lg) */}
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="text-white p-2 focus:outline-none"
+              className="lg:hidden text-white p-2 rounded-xl bg-zinc-900 border border-zinc-800 hover:border-pink-400 transition-colors focus:outline-none flex items-center justify-center shrink-0 cursor-pointer"
               aria-label="Toggle Navigation Menu"
             >
-              <iconify-icon icon={mobileMenuOpen ? "solar:close-circle-linear" : "solar:hamburger-menu-linear"} width="26" height="26"></iconify-icon>
+              {mobileMenuOpen ? (
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M18 6 6 18"/>
+                  <path d="m6 6 12 12"/>
+                </svg>
+              ) : (
+                <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="4" x2="20" y1="12" y2="12"/>
+                  <line x1="4" x2="20" y1="6" y2="6"/>
+                  <line x1="4" x2="20" y1="18" y2="18"/>
+                </svg>
+              )}
             </button>
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Mobile / Tablet Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-zinc-950 border-b border-zinc-800 px-6 py-6 space-y-4 animate-in slide-in-from-top-2">
+          <div className="lg:hidden bg-zinc-950/95 border-b border-zinc-800 px-6 py-6 space-y-4 animate-in slide-in-from-top-2 backdrop-blur-xl">
             <a 
               href="#about" 
               onClick={() => setMobileMenuOpen(false)} 
@@ -414,7 +425,7 @@ export default function App() {
               onClick={() => setMobileMenuOpen(false)} 
               className="block text-base font-medium text-zinc-300 hover:text-pink-400"
             >
-              Services & Signature Shine
+              Services & Signature Packages
             </a>
             <a 
               href="#impact" 
@@ -428,7 +439,7 @@ export default function App() {
               onClick={() => setMobileMenuOpen(false)} 
               className="block text-base font-medium text-zinc-300 hover:text-pink-400"
             >
-              GTA Projects & Vehicles
+              GTA Projects & Vehicle Showcase
             </a>
             <a 
               href="#reviews" 
@@ -451,6 +462,7 @@ export default function App() {
             >
               Book Home Service Appointment
             </a>
+
             <div className="pt-4 border-t border-zinc-800 flex flex-col gap-3">
               <a 
                 href="tel:4169198421" 
