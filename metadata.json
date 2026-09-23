@@ -1,0 +1,6 @@
+{
+  "name": "Ink N Shine Detailing",
+  "description": "Toronto's premier women-owned mobile auto detailing and paint restoration service. Serving the Greater Toronto Area (GTA) with deep interior steam extraction, tough salt removal, and ceramic coatings.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
