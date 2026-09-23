@@ -508,7 +508,7 @@ export default function App() {
               </div>
               
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-[1.08] mb-6">
-                Toronto's Premier <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-rose-300 to-pink-500">Women-Owned</span> Mobile Detailing
+                Toronto's Premier <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 via-rose-500 to-pink-600 dark:from-pink-400 dark:via-rose-300 dark:to-pink-400 font-black">Women-Owned</span> Mobile Detailing
               </h1>
               
               <p className="text-base sm:text-lg text-zinc-300 mb-8 max-w-2xl font-normal leading-relaxed">
@@ -1109,7 +1109,7 @@ export default function App() {
                 The Ink N Shine Result
               </span>
               <h2 className="text-3xl md:text-5xl font-extrabold text-white tracking-tight mb-6 leading-tight">
-                From salt-crusted mess to <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-400 to-rose-400">showroom fresh.</span>
+                From salt-crusted mess to <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-600 to-rose-600 dark:from-pink-400 dark:to-rose-400">showroom fresh.</span>
               </h2>
               <p className="text-zinc-300 text-base sm:text-lg mb-8 leading-relaxed">
                 Canadian winters are brutal on carpets, footwells, and paint clear coats. Our specialized enzymatic cleaners and pressurized steam break down salt crystals without degrading your car's underlying materials.
